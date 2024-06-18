@@ -49,7 +49,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "config_and_others.urls"
+ROOT_URLCONF = "sanruum.urls"
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config_and_others.wsgi.application"
+WSGI_APPLICATION = "sanruum.wsgi.application"
 
 # Database
 

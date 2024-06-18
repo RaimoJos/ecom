@@ -3,6 +3,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config_and_others.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sanruum.settings")
 
 application = get_asgi_application()
