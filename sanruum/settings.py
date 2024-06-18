@@ -2,6 +2,7 @@
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,7 +19,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -31,14 +32,15 @@ INSTALLED_APPS = [
 
     # Third party apps
     "rest_framework",
+    "rest_framework.authtoken",
 
     # Local apps
     "apps.products",
-    "apps.accounts",
-    "apps.orders",
-    "apps.cart",
-    "apps.favorites",
-    "apps.delivery",
+    # "apps.accounts",
+    # "apps.orders",
+    # "apps.cart",
+    # "apps.favorites",
+    # "apps.delivery",
     "apps.support",
 
 ]
@@ -58,7 +60,7 @@ ROOT_URLCONF = "sanruum.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [BASE_DIR, "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -101,7 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 
-LANGUAGE_CODE = "en-us"
+LANGUAGES = [
+    ("en", _("English")),
+    ("et", _("Estonian")),
+    ("ru", _("Russian"))
+]
 TIME_ZONE = "Europe/Tallinn"
 USE_I18N = True
 USE_TZ = True
@@ -110,6 +116,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
+
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
