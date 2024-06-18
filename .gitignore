@@ -1,3 +1,4 @@
 docs/logs/
 docs/project_docs/
 db.sqlite3
+.env
