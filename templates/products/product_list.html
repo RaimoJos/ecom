@@ -1,0 +1,17 @@
+<!-- ecom/apps/products/templates/products/product_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Product List</title>
+</head>
+<body>
+<h1>Product List</h1>
+<ul>
+    {% for product in products %}
+    <li><a href="{% url 'products:product_detail' product.id %}">{{ product.name }}</a></li>
+    {% endfor %}
+</ul>
+</body>
