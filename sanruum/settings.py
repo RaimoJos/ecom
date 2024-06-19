@@ -6,8 +6,13 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOG_FILE_PATH = os.path.join(BASE_DIR, "docs", "logs", "django.log")
+# Directory for the log files
+LOG_DIR = os.path.join(BASE_DIR, 'docs/logs')
+LOG_FILE = os.path.join(LOG_DIR, 'django.log')
 
+# Ensure the log directory exists
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -146,7 +151,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": LOG_FILE_PATH,
+            "filename": LOG_FILE,
             "formatter": "verbose",
         },
     },
