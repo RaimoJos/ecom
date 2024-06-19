@@ -3,3 +3,4 @@ python-dotenv==1.0.1
 djangorestframework==3.15.1
 django-rest-auth==0.9.5
 django-allauth==0.63.3
+dj-rest-auth==6.0.0
