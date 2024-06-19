@@ -1,10 +1,10 @@
-# ecom/apps/support/management/commands/runsslserver.py
 import logging
 import ssl
 
 from django.core.management.base import BaseCommand
 from django.core.servers.basehttp import WSGIServer, WSGIRequestHandler
 from django.core.wsgi import get_wsgi_application
+from django.utils.autoreload import run_with_reloader
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -31,12 +31,15 @@ class Command(BaseCommand):
         self.stdout.write(f"Starting development server at https://{addr}:{port}\n")
         self.stdout.write("Using SSL certificate from ssl/cert.pem and ssl/key.pem\n")
 
-        handler = get_wsgi_application()
-        logging.debug("WSGI application loaded")
+        def inner_run():
+            handler = get_wsgi_application()
+            logging.debug("WSGI application loaded")
 
-        server_address = (addr, port)
-        httpd = SSLWSGIServer(server_address, WSGIRequestHandler)
-        httpd.set_app(handler)
-        logging.debug("SSLWSGIServer ready to serve")
+            server_address = (addr, port)
+            httpd = SSLWSGIServer(server_address, WSGIRequestHandler)
+            httpd.set_app(handler)
+            logging.debug("SSLWSGIServer ready to serve")
 
-        httpd.serve_forever()
+            httpd.serve_forever()
+
+        run_with_reloader(inner_run)

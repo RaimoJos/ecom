@@ -1,15 +1,28 @@
-<!-- ecom/apps/products/templates/products/product_detail.html -->
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>{{ product.name }}</title>
-</head>
-<body>
-<h1>{{ product.name }}</h1>
-<p>{{ product.description }}</p>
-<p>Price: ${{ product.price }}</p>
-</body>
-</html>
+{% block title %}{{ product.name }}{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.description }}</p>
+    <p>Price: ${{ product.price }}</p>
+
+    <p>Average Rating: {{ product.average_rating }}</p>
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'products:rate_product' product.id %}" method="post">
+        {% csrf_token %}
+        <label for="rating">Rate this product:</label>
+        <select id="rating" name="rating">
+            <option value="1">1 star</option>
+            <option value="2">2 star</option>
+            <option value="3">3 star</option>
+            <option value="4">4 star</option>
+            <option value="5">5 star</option>
+        </select>
+        <button type="submit">Rate</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

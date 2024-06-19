@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2>Profile</h2>
+
+    <h3>Personal Information</h3>
+    <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Phone:</strong> {{ user.profile.phone }}</p> <!-- Assuming phone is in user profile model -->
+
+    <h3>Language Preferences</h3>
+    <p><strong>Preferred Language:</strong> {{ user.profile.language }}</p>
+    <!-- Assuming language is in user profile model -->
+
+    <h3>Address for Delivery</h3>
+    <p><strong>Address Line 1:</strong> {{ user.profile.address_line1 }}</p>
+    <p><strong>Address Line 2:</strong> {{ user.profile.address_line2 }}</p>
+    <p><strong>City:</strong> {{ user.profile.city }}</p>
+    <p><strong>State/Province:</strong> {{ user.profile.state }}</p>
+    <p><strong>Postal/Zip Code:</strong> {{ user.profile.postal_code }}</p>
+    <p><strong>Country:</strong> {{ user.profile.country }}</p>
+
+    <h3>Favorites</h3>
+    <ul>
+        {% for product in favorites %}
+        <li><a href="{% url 'products:product_detail' product.id %}">{{ product.name }}</a></li>
+        {% empty %}
+        <li>{% trans "You have no favorite products yet." %}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Order History</h3>
+    <ul>
+        {% for order in orders %}
+        <li>
+            <a href="{% url 'orders:order_detail' order.id %}">Order #{{ order.id }}</a> - {{ order.date }} - {{
+            order.total_amount }} - {{ order.status }}
+        </li>
+        {% empty %}
+        <li>{% trans "You have not placed any orders yet." %}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

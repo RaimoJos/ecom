@@ -1,3 +1,4 @@
+# ecom/apps/support/apps.py
 from django.apps import AppConfig
 
 

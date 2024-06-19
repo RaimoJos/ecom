@@ -1,21 +1,85 @@
+{% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>{% block title %}Sanruum E-Shop{% endblock %}</title>
+    <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/png">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
 <body>
 <header>
-    <nav>
-        <ul>
-        </ul>
-    </nav>
+    <div class="topbar">
+        <div class="container">
+            <div class="topbar__left">
+                <a href="#about">{% trans "About" %}</a>
+                <a href="#payments">{% trans "Payments" %}</a>
+                <a href="#delivery">{% trans "Delivery" %}</a>
+                <a href="#withdrawal">{% trans "Right of withdrawal" %}</a>
+                <a href="#faq">{% trans "FAQ" %}</a>
+                <a href="#services">{% trans "Services" %}</a>
+            </div>
+            <div class="topbar__right">
+                <a href="#contact">{% trans "Contact" %}</a>
+                <form action="{% url 'set_language' %}" class="language-form" method="get">
+                    <select name="lang" onchange="this.form.submit()">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang in LANGUAGES %}
+                        <option %} %}selected{% LANGUAGE_CODE endif if lang.0== value="{{ lang.0 }}" {%>
+                            {{ lang.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="container">
+            <div class="header__left">
+                <a href="{% url 'home' %}">
+                    <img alt="Sanruum Logo" src="{% static 'images/logo.png' %}">
+                </a>
+            </div>
+            <div class="header__center">
+                <form action="{% url 'products:product_list' %}" class="search-form" method="GET">
+                    <input name="q" placeholder="{% trans 'Search products...' %}" type="text">
+                    <button type="submit">{% trans 'Search' %}</button>
+                </form>
+            </div>
+            <div class="header__right">
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">{% trans "Profile" %}</a>
+                <a href="#">{% trans "Logout" %}</a>
+                {% else %}
+                <a href="{% url 'login' %}">{% trans "Login" %}</a>
+                <a href="{% url 'register' %}">{% trans "Register" %}</a>
+                {% endif %}
+                <a href="#">
+                    <img alt="Favorites" src="{% static 'images/favorites-icon.png' %}">
+                </a>
+                <a href="#">
+                    <img alt="Cart" src="{% static 'images/cart-icon.png' %}">
+                </a>
+            </div>
+        </div>
+    </div>
 </header>
+
 <main>
-    {% block content %}{% endblock %}
+    {% block content %}
+    {% endblock %}
 </main>
+
 <footer>
-    &copy; Sanruum E-Shop
+    <div class="container">
+        <p>&copy; {% trans "All rights reserved." %} Sanruum OÜ</p>
+    </div>
 </footer>
+<script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>
